@@ -1,0 +1,52 @@
+{
+  "name": "@deboxsoft/svelte-core",
+  "version": "1.0.1-beta.2",
+  "main": "index.js",
+  "module": "index.mjs",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "run-p build:rollup build:tsc",
+    "build:rollup": "rollup -c",
+    "build:tsc": "rimraf types && tsc",
+    "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+    "format": "prettier --write --plugin-search-dir=. --ignore-path \"./node_modules/**/*\" .",
+    "test": "uvu -r ts-node/register",
+    "bump": "yarpm run build && bump -c \"release client v\"",
+    "release": "yarpm run bump -- -t \"client-v\" && yarpm publish",
+    "release:dev": "git add . && yarpm run bump --  -p prerelease && yarpm-pnpm publish --tag dev --no-git-checks"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@nurdiansyah/bump": "^6.1.2",
+    "@nurdiansyah/eslint-config-devel": "^7.1.1",
+    "@nurdiansyah/rollup": "^1.6.8",
+    "@sveltejs/adapter-vercel": "^1.0.0-next.31",
+    "@sveltejs/kit": "^1.0.0-next.195",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-svelte3": "3.2.1",
+    "husky": "^4.3.8",
+    "prettier": "2.4.1",
+    "prettier-plugin-svelte": "2.4.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.53.1",
+    "svelte-preprocess": "4.9.5",
+    "typescript": "^4.4.4",
+    "uvu": "^0.5.2",
+    "vite-plugin-windicss": "^1.5.1",
+    "windicss": "^3.2.1",
+    "yarpm": "^1.1.1"
+  },
+  "dependencies": {
+    "@deboxsoft/module-client": "^2.2.10-beta.10",
+    "@deboxsoft/zod": "^3.0.0",
+    "@deboxsoft/svelte-core": "^1.0.1-beta.2",
+    "initials": "^3.0.0",
+    "sanitize-html": "^2.0.0",
+    "svelte": "^3.0.0"
+  }
+}
