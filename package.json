@@ -1,6 +1,6 @@
 {
   "name": "@deboxsoft/svelte-core",
-  "version": "1.0.1-beta.2",
+  "version": "1.0.1-beta.3",
   "main": "index.js",
   "module": "index.mjs",
   "types": "types/index.d.ts",
@@ -22,6 +22,7 @@
     "@nurdiansyah/bump": "^6.1.2",
     "@nurdiansyah/eslint-config-devel": "^7.1.1",
     "@nurdiansyah/rollup": "^1.6.8",
+    "@popperjs/core": "~2.10.2",
     "@sveltejs/adapter-vercel": "^1.0.0-next.31",
     "@sveltejs/kit": "^1.0.0-next.195",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
@@ -35,7 +36,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.53.1",
     "svelte-preprocess": "4.9.5",
-    "typescript": "^4.4.4",
+    "typescript": "^4.5.2",
     "uvu": "^0.5.2",
     "vite-plugin-windicss": "^1.5.1",
     "windicss": "^3.2.1",
@@ -43,8 +44,8 @@
   },
   "dependencies": {
     "@deboxsoft/module-client": "^2.2.10-beta.10",
-    "@deboxsoft/zod": "^3.0.0",
     "@deboxsoft/svelte-core": "^1.0.1-beta.2",
+    "@deboxsoft/zod": "^3.0.0",
     "initials": "^3.0.0",
     "sanitize-html": "^2.0.0",
     "svelte": "^3.0.0"
