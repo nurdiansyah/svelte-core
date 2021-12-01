@@ -46,7 +46,7 @@
   "dependencies": {
     "@deboxsoft/module-client": "^2.2.10-beta.10",
     "@deboxsoft/module-core": "^2.2.12",
-    "@deboxsoft/svelte-core": "workspace:^1.0.1-beta.3",
+    "@deboxsoft/svelte-core": "workspace:^1.0.1-beta.10",
     "@deboxsoft/zod": "^3.0.0",
     "initials": "^3.0.0",
     "sanitize-html": "^2.0.0",
