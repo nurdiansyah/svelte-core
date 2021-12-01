@@ -1,5 +1,6 @@
+/* eslint-disable */
 import * as Utils from "./utils";
-import * as API from "./api";
+import * as API from "./core";
 import { NotyButton } from "./button";
 import { Push } from "./push";
 
