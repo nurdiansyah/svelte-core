@@ -5,6 +5,8 @@ import { createLoadingStore, LoadingStore } from "../stores";
 export interface UIStore {
   isDark?: boolean;
   minimizeSidebarLeft?: boolean;
+  sidebarLeftEnable?: boolean;
+  sidebarSecondaryLeftEnable?: boolean;
   openSidebarLeft?: boolean;
   minimizeSidebarSecondaryLeft?: boolean;
   openSidebarSecondaryLeft?: boolean;
@@ -20,6 +22,8 @@ export interface UIContext {
   toggleOpenSidebarLeft: () => void;
   toggleMinimizeSidebarSecondaryLeft: () => void;
   toggleOpenSidebarSecondaryLeft: () => void;
+  setSidebarLeft: (enable: boolean) => void;
+  setSidebarSecondaryLeft: (enable: boolean) => void;
   setCurrentPath: (path: string) => void;
   getCurrentPath: () => Readable<string>;
   isActive: (path: string) => Readable<boolean>;
@@ -97,6 +101,18 @@ export const createUIContext = (options: Partial<UIContext> = {}) => {
     toggleOpenSidebarLeft,
     toggleMinimizeSidebarSecondaryLeft,
     toggleOpenSidebarSecondaryLeft,
+    setSidebarLeft(enable: boolean) {
+      store.update((_) => {
+        _.sidebarLeftEnable = enable;
+        return _;
+      });
+    },
+    setSidebarSecondaryLeft(enable: boolean) {
+      store.update((_) => {
+        _.sidebarSecondaryLeftEnable = enable;
+        return _;
+      });
+    },
     setCurrentPath(path) {
       store.update((_) => {
         _.currentPath = path;
