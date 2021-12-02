@@ -91,6 +91,7 @@ export const createUIContext = (options: Partial<UIContext> = {}) => {
     loadUIStore: () => {
       loadLocalStorage();
     },
+
     toggleTheme,
     toggleMinimizeSidebarLeft,
     toggleOpenSidebarLeft,
@@ -102,9 +103,11 @@ export const createUIContext = (options: Partial<UIContext> = {}) => {
         return _;
       });
     },
+
     getCurrentPath() {
       return derived(store, (_) => _.currentPath);
     },
+
     isActive(path) {
       return derived(store, (_) => {
         const regex = new RegExp(`^${path}($|/)`);
