@@ -17,5 +17,5 @@ const config = bundle(
 const pkg = fs.readJsonSync(path.resolve("package.json"));
 const dependencies = pkg.dependencies;
 const external = Object.keys(dependencies);
-config.external = [...external, "@deboxsoft/svelte-components"];
+config.external = [...external, "svelte/store"];
 export default config;
