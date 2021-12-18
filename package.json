@@ -1,6 +1,6 @@
 {
   "name": "@deboxsoft/svelte-core",
-  "version": "1.0.2",
+  "version": "1.0.3-beta.1",
   "main": "index.js",
   "module": "index.mjs",
   "types": "types/index.d.ts",
