@@ -1,6 +1,6 @@
 import { getContext, setContext } from "svelte";
 import { derived, Readable, Writable, writable } from "svelte/store";
-import { createLoadingStore, LoadingStore } from "../stores";
+import { createLoadingStore, createNotifyContext, LoadingStore, NotifyContext } from "../stores";
 
 export interface UIStore {
   isDark?: boolean;
@@ -17,7 +17,10 @@ export interface UIStore {
 }
 
 export interface UIContext {
+  loadingStore: LoadingStore;
+  notifyContext: NotifyContext;
   brandTitle?: string;
+  brandLink?: string;
   store: Readable<UIStore>;
   loadUIStore: () => void;
   toggleTheme: () => void;
@@ -33,7 +36,9 @@ export interface UIContext {
   setCurrentPath: (path: string) => void;
   getCurrentPath: () => Readable<string>;
   isActive: (path: string) => Readable<boolean>;
-  loadingStore: LoadingStore;
+  setLoading: (loading: boolean) => void;
+  addNotifyError: (args: { message: string; title?: string }) => void;
+  addNotifySuccess: (args: { message: string; title?: string }) => void;
 }
 
 const key = Symbol("ui-context");
@@ -41,6 +46,7 @@ const key = Symbol("ui-context");
 export const createUIContext = (options: Partial<UIContext> = {}) => {
   const store: Writable<UIStore> = writable({});
   const loadingStore = createLoadingStore();
+  const notifyContext = createNotifyContext();
   const loadLocalStorage = () => {
     const isDark = localStorage.getItem("is-dark");
     const minimizeSidebarLeft = localStorage.getItem("toggle-minimize-sidebar-left");
@@ -117,11 +123,11 @@ export const createUIContext = (options: Partial<UIContext> = {}) => {
   };
   const context: UIContext = {
     brandTitle: options.brandTitle,
+    brandLink: options.brandLink,
     store: derived(store, (_: UIStore) => _),
     loadUIStore: () => {
       loadLocalStorage();
     },
-
     toggleTheme,
     toggleMinimizeSidebarLeft,
     toggleOpenSidebarLeft,
@@ -160,11 +166,31 @@ export const createUIContext = (options: Partial<UIContext> = {}) => {
 
     isActive(path) {
       return derived(store, (_) => {
-        const regex = new RegExp(`^${path}($|/)`);
+        const regex = new RegExp(`^${path}($|/.*)`);
         return !!_.currentPath?.match(regex);
       });
     },
-    loadingStore
+    loadingStore,
+    notifyContext,
+    setLoading(loading) {
+      loadingStore.set(loading);
+    },
+    addNotifyError({ message, title, ...opts }) {
+      notifyContext.addNotification({
+        title,
+        message,
+        type: "error",
+        ...opts
+      });
+    },
+    addNotifySuccess({ message, title, ...opts }) {
+      notifyContext.addNotification({
+        title,
+        message,
+        type: "success",
+        ...opts
+      });
+    }
   };
   setContext(key, context);
   return context;
