@@ -1,6 +1,6 @@
 {
   "name": "@deboxsoft/svelte-core",
-  "version": "1.0.3-beta.3",
+  "version": "1.0.3-beta.4",
   "main": "index.js",
   "module": "index.mjs",
   "types": "types/index.d.ts",
@@ -31,6 +31,7 @@
     "eslint": "~8.0.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-svelte3": "3.2.1",
+    "eventemitter3": "^4.0.7",
     "husky": "^4.3.8",
     "mousetrap": "^1.6.5",
     "prettier": "2.5.1",
@@ -50,5 +51,8 @@
     "initials": "^3.0.0",
     "sanitize-html": "^2.0.0",
     "svelte": "~3.44.0"
+  },
+  "peerDependencies": {
+    "eventemitter3": "^4.0.7"
   }
 }
