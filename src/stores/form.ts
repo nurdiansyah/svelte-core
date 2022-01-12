@@ -6,6 +6,7 @@ export interface FormContext {
   schema: ZodObject<ZodRawShape>;
   fields: Writable<Record<string, any>>;
   submitted: Writable<boolean>;
+  submit: (cb: (input: Record<any, any>) => void) => void;
   isValid: Writable<boolean>;
   fieldsErrors: Writable<Record<string, string[]>>;
   validateField: (args?: any) => (value?: unknown) => void;
@@ -53,13 +54,14 @@ export const createFormContext = ({
   schema,
   values = {},
   validateField,
-  fields = writable(values),
   isValid = writable(false),
-  fieldsErrors = createFieldsErrorStore(isValid),
+  fieldsErrors = undefined,
   submittedEnable = false
 }: FormOptions): FormContext => {
+  const fields = writable(values);
   const submitted = writable(submittedEnable);
   let $fields = {};
+  fieldsErrors = fieldsErrors || createFieldsErrorStore(isValid);
   submitted.subscribe((_submitted) => {
     submittedEnable = _submitted;
   });
@@ -82,7 +84,7 @@ export const createFormContext = ({
             if (error) {
               const _errors = error.errors;
               if (Array.isArray(_errors)) {
-                $fieldsErrors[fieldName] = _errors.map((_, i) => ({
+                $fieldsErrors[fieldName] = _errors.map((_) => ({
                   path: _.path,
                   message: _.message
                 }));
@@ -105,7 +107,16 @@ export const createFormContext = ({
     fieldsErrors,
     submitted,
     isValid,
-    validateField: validateField || validateFieldDefault
+    validateField: validateField || validateFieldDefault,
+    submit(cb: (_input) => void) {
+      let input;
+      if (schema) {
+        input = schema.parse($fields);
+      } else {
+        input = $fields;
+      }
+      cb(input);
+    }
   };
   setContext(key, context);
   return context;

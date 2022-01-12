@@ -7,9 +7,12 @@ export interface UIStore {
   minimizeSidebarLeft?: boolean;
   sidebarLeftEnable?: boolean;
   sidebarSecondaryLeftEnable?: boolean;
+  sidebarSecondaryRightEnable?: boolean;
   openSidebarLeft?: boolean;
   minimizeSidebarSecondaryLeft?: boolean;
   openSidebarSecondaryLeft?: boolean;
+  minimizeSidebarSecondaryRight?: boolean;
+  openSidebarSecondaryRight?: boolean;
   currentPath?: string;
 }
 
@@ -20,10 +23,13 @@ export interface UIContext {
   toggleTheme: () => void;
   toggleMinimizeSidebarLeft: () => void;
   toggleOpenSidebarLeft: () => void;
+  setSidebarLeft: (enable: boolean) => void;
   toggleMinimizeSidebarSecondaryLeft: () => void;
   toggleOpenSidebarSecondaryLeft: () => void;
-  setSidebarLeft: (enable: boolean) => void;
   setSidebarSecondaryLeft: (enable: boolean) => void;
+  toggleMinimizeSidebarSecondaryRight: () => void;
+  toggleOpenSidebarSecondaryRight: () => void;
+  setSidebarSecondaryRight: (enable: boolean) => void;
   setCurrentPath: (path: string) => void;
   getCurrentPath: () => Readable<string>;
   isActive: (path: string) => Readable<boolean>;
@@ -41,13 +47,17 @@ export const createUIContext = (options: Partial<UIContext> = {}) => {
     const openSidebarLeft = localStorage.getItem("toggle-open-sidebar-left");
     const minimizeSidebarSecondaryLeft = localStorage.getItem("toggle-minimize-sidebar-secondary-left");
     const openSidebarSecondaryLeft = localStorage.getItem("toggle-open-sidebar-secondary-left");
+    const minimizeSidebarSecondaryRight = localStorage.getItem("toggle-minimize-sidebar-secondary-right");
+    const openSidebarSecondaryRight = localStorage.getItem("toggle-open-sidebar-secondary-right");
     store.update((_) => ({
       ..._,
       isDark: isDark === "true" || false,
       minimizeSidebarLeft: minimizeSidebarLeft === "true" || false,
       openSidebarLeft: openSidebarLeft === "true" || false,
       minimizeSidebarSecondaryLeft: minimizeSidebarSecondaryLeft === "true" || false,
-      openSidebarSecondaryLeft: openSidebarSecondaryLeft === "true" || false
+      openSidebarSecondaryLeft: openSidebarSecondaryLeft === "true" || false,
+      minimizeSidebarSecondaryRight: minimizeSidebarSecondaryRight === "true" || false,
+      openSidebarSecondaryRight: openSidebarSecondaryRight === "true" || false
     }));
   };
   const toggleTheme = () => {
@@ -89,6 +99,22 @@ export const createUIContext = (options: Partial<UIContext> = {}) => {
       return s;
     });
   };
+
+  const toggleMinimizeSidebarSecondaryRight = () => {
+    store.update((s: UIStore) => {
+      s.minimizeSidebarSecondaryLeft = !s.minimizeSidebarSecondaryLeft;
+      localStorage.setItem("toggle-minimize-sidebar-secondary-right", String(s.minimizeSidebarSecondaryRight));
+      return s;
+    });
+  };
+
+  const toggleOpenSidebarSecondaryRight = () => {
+    store.update((s: UIStore) => {
+      s.openSidebarSecondaryLeft = !s.openSidebarSecondaryLeft;
+      localStorage.setItem("toggle-open-sidebar-secondary-right", String(s.openSidebarSecondaryRight));
+      return s;
+    });
+  };
   const context: UIContext = {
     brandTitle: options.brandTitle,
     store: derived(store, (_: UIStore) => _),
@@ -101,6 +127,8 @@ export const createUIContext = (options: Partial<UIContext> = {}) => {
     toggleOpenSidebarLeft,
     toggleMinimizeSidebarSecondaryLeft,
     toggleOpenSidebarSecondaryLeft,
+    toggleMinimizeSidebarSecondaryRight,
+    toggleOpenSidebarSecondaryRight,
     setSidebarLeft(enable: boolean) {
       store.update((_) => {
         _.sidebarLeftEnable = enable;
@@ -110,6 +138,12 @@ export const createUIContext = (options: Partial<UIContext> = {}) => {
     setSidebarSecondaryLeft(enable: boolean) {
       store.update((_) => {
         _.sidebarSecondaryLeftEnable = enable;
+        return _;
+      });
+    },
+    setSidebarSecondaryRight(enable: boolean) {
+      store.update((_) => {
+        _.sidebarSecondaryRightEnable = enable;
         return _;
       });
     },
