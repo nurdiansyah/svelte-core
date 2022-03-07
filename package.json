@@ -11,9 +11,9 @@
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --write --plugin-search-dir=. --ignore-path \"./node_modules/**/*\" .",
     "test": "uvu -r ts-node/register",
-    "bump": "yarpm run build && bump -c \"release client v\"",
-    "release": "yarpm run bump -- -t \"client-v\" && yarpm publish",
-    "release:dev": "git add . && yarpm run bump --  -p prerelease && yarpm-pnpm publish --tag dev --no-git-checks"
+    "bump": "yarpm run build && bump",
+    "release": "yarpm run bump -- -t && yarpm publish",
+    "release:dev": "git add . && yarpm run bump -- prerelease && yarpm-pnpm publish --tag dev --no-git-checks"
   },
   "publishConfig": {
     "access": "public"
