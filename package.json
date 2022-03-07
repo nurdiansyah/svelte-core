@@ -21,7 +21,7 @@
   "devDependencies": {
     "@nurdiansyah/bump": "^6.1.2",
     "@nurdiansyah/eslint-config-devel": "^8.0.3",
-    "@nurdiansyah/rollup": "^1.6.8",
+    "@nurdiansyah/rollup": "^1.7.3",
     "@nurdiansyah/uvu": "^0.5.9",
     "@popperjs/core": "~2.10.2",
     "@sveltejs/adapter-vercel": "^1.0.0-next.31",
