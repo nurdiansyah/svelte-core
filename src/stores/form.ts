@@ -2,7 +2,7 @@ import { ZodObject, ZodRawShape } from "@deboxsoft/zod";
 import { getContext, hasContext, setContext } from "svelte";
 import { Writable, writable } from "svelte/store";
 
-export interface FormContext {
+export interface FormContext<I = any> {
   schema: ZodObject<ZodRawShape>;
   fields: Writable<Record<string, any>>;
   submitted: Writable<boolean>;
@@ -10,6 +10,7 @@ export interface FormContext {
   isValid: Writable<boolean>;
   fieldsErrors: Writable<Record<string, string[]>>;
   validateField: (args?: any) => (value?: unknown) => void;
+  onEvent?: (input: I) => Promise<void>;
 }
 
 export interface FormOptions {
@@ -108,14 +109,15 @@ export const createFormContext = ({
     submitted,
     isValid,
     validateField: validateField || validateFieldDefault,
-    submit(cb: (_input) => void) {
+    submit(cb?: (_input) => void) {
       let input;
       if (schema) {
         input = schema.parse($fields);
       } else {
         input = $fields;
       }
-      cb(input);
+      cb && cb(input);
+      return input;
     }
   };
   setContext(key, context);
